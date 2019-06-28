@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+	<div class="start" style="background-image: url(west.jpg); height: 1000px; width: 100%; background-size: 100% 100%">
+		<div style="padding-top: 200px; display: none;" class="btnReload text-center"><button class="btn btn-warning text-white">ПЕРЕЗАГРУЗИТЬ СТРАНИЦУ</button></div>
+
+		<h1 class="score ml-5" >0</h1>
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 20%; margin-top: 19%; ">
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 60%; margin-top: 16%; ">
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 70%; margin-top: 20%; ">
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 10%; margin-top: 12%; ">
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 40%; margin-top: 13%; ">
+		<img class="enemy1" src="shooter.png" alt="" style="position: absolute; width: 6%; margin-left: 80%; margin-top: 8%; ">
+
+		<img class="enemy2" src="cowboy.png" alt="" style="position: absolute; width: 5%; margin-left: 10%; margin-top: 30%; ">
+		<img class="enemy2" src="cowboy.png" alt="" style="position: absolute; width: 5%; margin-left: 40%; margin-top: 30%; ">
+		<img class="enemy2" src="cowboy.png" alt="" style="position: absolute; width: 5%; margin-left: 60%; margin-top: 30%; ">
+		<img class="enemy2" src="cowboy.png" alt="" style="position: absolute; width: 5%; margin-left: 30%; margin-top: 24%; ">
+	
+		<img class="enemy3" src="cowboy2.png" alt="" style="position: absolute; width: 10%; margin-left: 0%; margin-top: 20%; ">
+		<img class="enemy3" src="cowboy2.png" alt="" style="position: absolute; width: 10%; margin-left: 25%; margin-top: 10%; ">
+		<img class="enemy3" src="cowboy2.png" alt="" style="position: absolute; width: 10%; margin-left: 50%; margin-top: 24%; ">
+		<img class="enemy3" src="cowboy2.png" alt="" style="position: absolute; width: 10%; margin-left: 70%; margin-top: 35%; ">
+		<img class="enemy3" src="cowboy2.png" alt="" style="position: absolute; width: 10%; margin-left: 90%; margin-top: 20%; ">
+
+
+	</div>
+	<script>
+
+		// ПЕРЕМЕННЫЕ С КОВБОЯМИ
+		let enemy1 = document.querySelectorAll(".enemy1"); //КОВБОЙ 1
+		let enemy2 = document.querySelectorAll(".enemy2"); //КОВБОЙ 2
+		let enemy3 = document.querySelectorAll(".enemy3"); //КОВБОЙ 3
+
+		let scoreI = document.querySelector(".score"); //ПЕРЕМЕННАЯ ДЛЯ ДОБАВЛЕНИЯ ОЧКОВ
+		let score = 0; //ОЧКИ
+
+		let start = document.querySelector(".start");
+
+		for (let i = 0; i < enemy1.length; i++) { //ЦИКЛ С ПЕРВЫМ КОВБОЕМ
+			enemy1[i].onclick = function() {
+				enemy1[i].style.display = "none";
+				enemy(10);
+			}
+		}
+
+		for (let i = 0; i < enemy2.length; i++) { //ЦИКЛ СО ВТОРЫМ КОВБОЕМ
+			enemy2[i].onclick = function() {
+				enemy2[i].style.display = "none";
+				enemy(20);
+			}
+		}
+
+		for (let i = 0; i < enemy3.length; i++) { //ЦИКЛ С ТРЕТЬИМ КОВБОЕМ
+			enemy3[i].onclick = function() {
+				enemy3[i].style.display = "none";
+				enemy(30);
+			}
+		}
+
+		// ФУНКЦИЯ С АРГУМЕНТОМ ДЛЯ ОЧКОВ
+		function enemy(arg) {
+			score = score + arg;
+			scoreI.innerHTML = score;
+		}
+
+		// ФУНКЦИЯ ТАЙМЕРА ДЛЯ ОКОНЧАНИЯ ИГРЫ
+		function stop() {
+
+			let btnReload = document.querySelector(".btnReload");// ПОЛУЧЕНИЕ КНОПКИ ДЛЯ ПЕРЕЗАГРУЗКИ
+			btnReload.style.display = "block";// ПОКАЗЫВАЕМ КНОПКУ
+			btnReload.onclick = function() {
+				location.reload(); // ПРИ НАЖАТИИ ПЕРЕЗАГРУЗИТЬ СТРАНИЦУ
+			}
+
+			// УСЛОВИЯ
+			if (score >= 100) {
+				alert("You WIN!");
+				start.style.backgroundImage = "url(win.png)";
+				start.style.transition = "all 3s ease";
+			}
+
+			else {
+				alert("You LOSE!");
+				start.style.backgroundImage = "url(death.png)";
+				start.style.transition = "all 3s ease";
+			}
+
+			// СКРЫТИЕ КОВБОЕВ ПОСЛЕ ОКОНЧАНИЯ ИГРЫ
+			for (var i = 0; i < enemy1.length; i++) {
+				enemy1[i].hidden = true;
+			}
+
+			for (var i = 0; i < enemy2.length; i++) {
+				enemy2[i].hidden = true;
+			}
+
+			for (var i = 0; i < enemy3.length; i++) {
+				enemy3[i].hidden = true;
+			}
+		}
+
+		// ТАЙМЕР
+		setTimeout(stop, 3000);
+	</script>
+</body>
+</html>
